@@ -1,8 +1,8 @@
-const { Schema, model, ObjectIdSchemaDefinition } = require('mongoose');
+const { Schema, model, ObjectId } = require('mongoose');
 
 const messageSchema = new Schema({
   author: {
-    type: ObjectIdSchemaDefinition,
+    type: ObjectId,
     required: true,
   },
   sentAt: {

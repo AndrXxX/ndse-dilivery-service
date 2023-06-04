@@ -1,9 +1,9 @@
-const { Schema, model, ObjectIdSchemaDefinition } = require('mongoose');
+const { Schema, model, ObjectId } = require('mongoose');
 const Message = require('./Message')
 
 const chatSchema = new Schema({
   users: {
-    type: [ObjectIdSchemaDefinition, ObjectIdSchemaDefinition],
+    type: [ObjectId, ObjectId],
     required: true,
   },
   createdAt: {

@@ -1,4 +1,4 @@
-const { Schema, model, ObjectIdSchemaDefinition } = require('mongoose');
+const { Schema, model, ObjectId } = require('mongoose');
 
 const advertisementSchema = new Schema({
   shortText: {
@@ -15,7 +15,7 @@ const advertisementSchema = new Schema({
     required: false,
   },
   userId: {
-    type: ObjectIdSchemaDefinition,
+    type: ObjectId,
     required: true,
   },
   createdAt: {

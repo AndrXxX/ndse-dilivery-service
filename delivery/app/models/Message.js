@@ -8,6 +8,7 @@ const messageSchema = new Schema({
   sentAt: {
     type: Date,
     required: true,
+    default: Date.now,
   },
   text: {
     type: String,

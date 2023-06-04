@@ -9,6 +9,7 @@ const chatSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
+    default: Date.now,
   },
   messages: {
     type: [Message],

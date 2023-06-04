@@ -1,5 +1,8 @@
 const ChatModel = require('../models/Chat');
 const messageModule = require("./MessageModule");
+const EventEmitter = require("events");
+
+const chatEmitter = new EventEmitter();
 
 class ChatModule {
   async find(users) {
@@ -16,6 +19,7 @@ class ChatModule {
     }
     chat.messages.push(message);
     await chat.save();
+    chatEmitter.emit('messageAdded', { chat, message});
     return chat;
   }
   async sendMessage(data) {
@@ -23,6 +27,11 @@ class ChatModule {
     const message = messageModule.create(text, author);
     await this.getOrCreate([author, receiver], message);
     return message;
+  }
+  async subscribe(cb) {
+    chatEmitter.on('messageAdded', ({ chat, message}) => {
+      cb({ chatId: chat.id, message });
+    });
   }
 }
 

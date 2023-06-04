@@ -33,6 +33,10 @@ class ChatModule {
       cb({ chatId: chat.id, message });
     });
   }
+  async getHistory(id) {
+    const chat = await ChatModel.findById(id).select('-__v');
+    return chat ? chat.messages : [];
+  }
 }
 
 module.exports = new ChatModule();

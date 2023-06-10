@@ -6,7 +6,7 @@ const userSchema = new Schema({
     required: [true, 'Не указан email'],
     unique: true,
   },
-  passwordHash: {
+  password: {
     type: String,
     required: [true, 'Не указан пароль'],
   },

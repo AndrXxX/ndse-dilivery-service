@@ -4,7 +4,7 @@ const generator = require('../utils/HashGenerator');
 class UserModule {
   async create(data) {
     const user = new UserModel(data);
-    user.password = generator.generate(user.password);
+    user.password = generator.generate(data.password);
     await user.save();
     return user;
   }

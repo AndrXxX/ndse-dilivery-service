@@ -5,6 +5,7 @@ const error404Middleware = require("../middleware/api/404");
 const authMiddleware = require("../middleware/api/auth");
 const userSigninHandler = require("./api/handlers/UserSigninHandler");
 const userSignupHandler = require("./api/handlers/UserSignupHandler");
+const userSignoutHandler = require("./api/handlers/UserSignoutHandler");
 
 router.post('/signin',
   passport.authenticate('local'),
@@ -13,6 +14,10 @@ router.post('/signin',
 
 router.post('/signup',
   userSignupHandler,
+);
+
+router.post('/signout',
+  userSignoutHandler,
 );
 
 router.use(authMiddleware);

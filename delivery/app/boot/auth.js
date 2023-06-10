@@ -6,7 +6,7 @@ const checker = require('../utils/HashGenerator');
 const verify = async (email, password, done) => {
   const user = await usersStore.findByEmail(email);
   if (!user || !checker.isValid(password, user.password)) {
-    return done(new Error('Неверное имя или пароль'));
+    return done(null, false);
   }
   return done(null, user);
 }

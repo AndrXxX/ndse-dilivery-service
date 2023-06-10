@@ -12,7 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "@types/mongoose": "^5.11.97"
   },
   "dependencies": {
     "axios": "^1.4.0",

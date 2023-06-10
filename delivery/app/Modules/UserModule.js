@@ -11,6 +11,9 @@ class UserModule {
   async findByEmail(email) {
     return UserModel.findOne({ email }).select('-__v');
   }
+  async findById(id) {
+    return UserModel.findById(id).select('-__v');
+  }
 }
 
 module.exports = new UserModule();

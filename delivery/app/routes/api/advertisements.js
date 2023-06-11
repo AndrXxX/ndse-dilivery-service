@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const advertisementListHandler = require('./handlers/AdvertisementListHandler');
-const createAdvertisementHandler = require('./handlers/CreateAdvertisementHandler');
+const advertisementCreateHandler = require('./handlers/AdvertisementCreateHandler');
 const fileMiddleware = require("../../middleware/api/file");
 const authMiddleware = require("../../middleware/api/auth");
 
@@ -15,7 +15,7 @@ router.post('/',
   fileMiddleware.fields([
     {name: 'images'},
   ]),
-  createAdvertisementHandler,
+  advertisementCreateHandler,
 );
 
 module.exports = router;

@@ -17,13 +17,16 @@ class AdvertisementModule {
     return model;
   }
   async remove(id) {
-    const model = AdvertisementModel.findById(id);
+    const model = AdvertisementModel.findById(id).select('-__v');
     if (model) {
       model.isDeleted = true;
       model.save();
       return true;
     }
     return false;
+  }
+  async list() {
+    return await AdvertisementModel.find().select('-__v');
   }
 }
 

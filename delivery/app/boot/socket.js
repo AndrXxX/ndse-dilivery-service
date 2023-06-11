@@ -2,6 +2,7 @@ const sessionMiddleware = require('../middleware/api/session');
 const authMiddleware = require('../middleware/socket/auth');
 const passport = require("passport");
 const onGetHistoryHandler = require("./socket/OnGetHistoryHandler")
+const onSendMessageHandler = require("./socket/OnSendMessageHandler")
 
 const onDisconnect = (socket, id) => {
   socket.on('disconnect', () => {
@@ -20,6 +21,7 @@ module.exports = (io) => {
     console.log(`Socket connected: ${id}`);
 
     await onGetHistoryHandler(socket);
+    await onSendMessageHandler(socket);
 
     onDisconnect(socket, id);
   });

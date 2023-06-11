@@ -3,6 +3,7 @@ const authMiddleware = require('../middleware/socket/auth');
 const passport = require("passport");
 const onGetHistoryHandler = require("./socket/OnGetHistoryHandler")
 const onSendMessageHandler = require("./socket/OnSendMessageHandler")
+const subscribeOnNewMessageHandler = require("./socket/SubscribeOnNewMessageHandler")
 
 const onDisconnect = (socket, id) => {
   socket.on('disconnect', () => {
@@ -22,6 +23,7 @@ module.exports = (io) => {
 
     await onGetHistoryHandler(socket);
     await onSendMessageHandler(socket);
+    await subscribeOnNewMessageHandler(socket);
 
     onDisconnect(socket, id);
   });

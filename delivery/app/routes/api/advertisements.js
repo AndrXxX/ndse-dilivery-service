@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const advertisementsListHandler = require('./handlers/AdvertisementsListHandler');
+const advertisementListHandler = require('./handlers/AdvertisementListHandler');
 const createAdvertisementHandler = require('./handlers/CreateAdvertisementHandler');
 const fileMiddleware = require("../../middleware/api/file");
 const authMiddleware = require("../../middleware/api/auth");
 
 router.get('/',
-  advertisementsListHandler,
+  advertisementListHandler,
 );
 
 router.use(authMiddleware);

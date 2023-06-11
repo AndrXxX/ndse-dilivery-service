@@ -8,11 +8,11 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, 'Не указан пароль (password)'],
+    required: [true, 'Не указан пароль'],
   },
   name: {
     type: String,
-    required: [true, 'Не указан логин (name)'],
+    required: [true, 'Не указан логин'],
   },
   contactPhone: {
     type: String,

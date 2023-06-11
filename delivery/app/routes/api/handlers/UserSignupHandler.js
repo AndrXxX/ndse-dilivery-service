@@ -11,10 +11,9 @@ module.exports = async (req, res, next) => {
   try {
     user = await usersStore.create(req.body);
   } catch (e) {
-    const error = e.errors.name.message || "Ошибка при сохранении пользователя";
     return res
       .status(401)
-      .json(formatter.error(error));
+      .json(formatter.error(e.message || "Ошибка при сохранении пользователя"));
   }
 
   res

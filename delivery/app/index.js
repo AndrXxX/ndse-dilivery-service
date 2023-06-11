@@ -10,7 +10,7 @@ const uploadDirAccessor = require('./utils/UploadDirAccessor');
 const auth = require('./boot/auth');
 const error404Middleware = require("./middleware/api/404");
 const sessionMiddleware = require('./middleware/api/session');
-// const bootSocket = require('./boot/socket');
+const bootSocket = require('./boot/socket');
 
 const app = express();
 auth();
@@ -28,8 +28,7 @@ app.use(error404Middleware);
 try {
   mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
   const server = app.listen(port);
-  new Server(server);
-  // bootSocket(new Server(server));
+  bootSocket(new Server(server));
 } catch (e) {
   console.error(e);
 }

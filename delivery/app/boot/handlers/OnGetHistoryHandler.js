@@ -1,5 +1,5 @@
 const chatModule = require("../../Modules/ChatModule");
-const paramsConverter = require("./ParamsConverter");
+const paramsConverter = require("../../utils/ParamsConverter");
 
 module.exports = async (socket) => {
   const currentUser = socket.request.user;

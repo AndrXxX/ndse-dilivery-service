@@ -1,7 +1,13 @@
 const AdvertisementModel = require('../models/Advertisement');
 
 class AdvertisementModule {
-  async find({ shortText, description, userId, tags }) {
+  async find({ id, shortText, description, userId, tags }) {
+    const filters = { isDeleted: false };
+    id && (filters.id = id);
+    shortText && (filters.shortText = shortText);
+    description && (filters.description = description);
+    userId && (filters.userId = userId);
+    tags && (filters.tags = tags);
     // TODO:
     // В объекте params должны учитываться следующие поля:
     //
@@ -9,7 +15,7 @@ class AdvertisementModule {
     // description — поиск регулярным выражением;
     // userId — точное совпадение;
     // tags — значение в базе данных должно включать все искомые значения.
-    return AdvertisementModel.find({ shortText, description, userId, tags, isDeleted: false }).select('-__v');
+    return await AdvertisementModel.find(filters).select('-__v');
   }
   async create(data) {
     const model = new AdvertisementModel(data);
@@ -17,16 +23,13 @@ class AdvertisementModule {
     return model;
   }
   async remove(id) {
-    const model = AdvertisementModel.findById(id).select('-__v');
+    const model = await this.find({ id });
     if (model) {
       model.isDeleted = true;
       model.save();
       return true;
     }
     return false;
-  }
-  async list() {
-    return await AdvertisementModel.find().select('-__v');
   }
 }
 

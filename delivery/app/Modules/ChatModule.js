@@ -6,11 +6,11 @@ const chatEmitter = new EventEmitter();
 
 class ChatModule {
   async find(users) {
-    const { userId1, userId2 } = users;
-    return await ChatModel.findOne({ users: [userId1, userId2] }).select('-__v');
+    const [ userId1, userId2 ] = users;
+    return await ChatModel.findOne({ users: [userId1, userId2] }).populate('messages').select('-__v');
   }
   async findById(id) {
-    return await ChatModel.findById(id).select('-__v');
+    return await ChatModel.findById(id).populate('messages').select('-__v');
   }
   async getOrCreate(users, message = null) {
     let chat = await this.find(users);
@@ -22,12 +22,12 @@ class ChatModule {
     }
     message && chat.messages.push(message.id);
     await chat.save();
-    chatEmitter.emit('messageAdded', { chat, message});
+    message && chatEmitter.emit('messageAdded', { chat, message});
     return chat;
   }
   async sendMessage(data) {
     const { author, receiver, text } = data;
-    const message = messageModule.create(text, author);
+    const message = await messageModule.create(text, author);
     await this.getOrCreate([author, receiver], message);
     return message;
   }

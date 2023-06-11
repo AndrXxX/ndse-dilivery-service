@@ -1,4 +1,5 @@
 const formatter = require('../../../utils/ResponseFormatter');
+const userFormatter = require('../../../utils/UserFormatter');
 const passport = require("passport");
 
 module.exports = async (req, res) => {
@@ -10,12 +11,7 @@ module.exports = async (req, res) => {
     }
     return res
       .status(201)
-      .json(formatter.ok({
-        id: req.user.id,
-        email: req.user.email,
-        name: req.user.name,
-        contactPhone: req.user.contactPhone,
-      }));
+      .json(formatter.ok(userFormatter.format(req.user)));
   };
   passport.authenticate('local', {}, (err, user) => {
     return user ? req.login(user, nextFunc) : nextFunc();

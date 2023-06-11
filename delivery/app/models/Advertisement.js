@@ -16,6 +16,7 @@ const advertisementSchema = new Schema({
   userId: {
     type: ObjectId,
     required: [true, 'Не указан идентификатор пользователя'],
+    ref: "User",
   },
   createdAt: {
     type: Date,

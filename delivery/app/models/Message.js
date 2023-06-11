@@ -1,9 +1,10 @@
-const { Schema, model, ObjectId } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema({
   author: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: "User",
   },
   sentAt: {
     type: Date,

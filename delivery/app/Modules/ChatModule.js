@@ -9,7 +9,7 @@ class ChatModule {
     const { userId1, userId2 } = users;
     return ChatModel.findOne({ users: [userId1, userId2] }).select('-__v');
   }
-  async getOrCreate(users, message) {
+  async getOrCreate(users, message = null) {
     let chat = await this.find(users);
     if (!chat) {
       chat = new ChatModel();
@@ -17,7 +17,7 @@ class ChatModule {
       chat.createdAt = new Date;
       chat.messages = [];
     }
-    chat.messages.push(message);
+    message && chat.messages.push(message.id);
     await chat.save();
     chatEmitter.emit('messageAdded', { chat, message});
     return chat;

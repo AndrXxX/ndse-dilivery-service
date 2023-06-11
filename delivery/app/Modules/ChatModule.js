@@ -7,7 +7,10 @@ const chatEmitter = new EventEmitter();
 class ChatModule {
   async find(users) {
     const { userId1, userId2 } = users;
-    return ChatModel.findOne({ users: [userId1, userId2] }).select('-__v');
+    return await ChatModel.findOne({ users: [userId1, userId2] }).select('-__v');
+  }
+  async findById(id) {
+    return await ChatModel.findById(id).select('-__v');
   }
   async getOrCreate(users, message = null) {
     let chat = await this.find(users);
@@ -28,13 +31,13 @@ class ChatModule {
     await this.getOrCreate([author, receiver], message);
     return message;
   }
-  async subscribe(cb) {
+  subscribe(cb) {
     chatEmitter.on('messageAdded', ({ chat, message}) => {
       cb({ chatId: chat.id, message });
     });
   }
   async getHistory(id) {
-    const chat = await ChatModel.findById(id).select('-__v');
+    const chat = await this.findById(id);
     return chat ? chat.messages : [];
   }
 }

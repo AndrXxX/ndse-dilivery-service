@@ -7,6 +7,7 @@ const apiRouter = require('./routes/api');
 
 const mongoose = require('mongoose');
 const { cookieSecret, port, dbUrl } = require('./config');
+const uploadDirAccessor = require('./utils/UploadDirAccessor');
 const auth = require('./boot/auth');
 const error404Middleware = require("./middleware/api/404");
 // const bootSocket = require('./boot/socket');
@@ -20,8 +21,9 @@ app.use(expressSession({
   saveUninitialized: false,
 }))
 
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
+uploadDirAccessor.createUploadDirs();
 
 app.use(express.json());
 app.use(express.urlencoded());

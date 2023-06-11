@@ -1,9 +1,10 @@
 const chatModule = require("../../Modules/ChatModule");
+const paramsConverter = require("./ParamsConverter");
 
 module.exports = async (socket) => {
   const currentUser = socket.request.user;
   socket.on('getHistory', async (params) => {
-    params = params ? JSON.parse(params) : {}
+    params = paramsConverter.convert(params);
     if (!params.id) {
       return socket.emit('chatHistory', []);
     }

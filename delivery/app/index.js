@@ -1,26 +1,21 @@
 const express = require('express');
-const expressSession = require('express-session');
 const passport = require('passport');
 const { Server } = require("socket.io");
 
 const apiRouter = require('./routes/api');
 
 const mongoose = require('mongoose');
-const { cookieSecret, port, dbUrl } = require('./config');
+const { port, dbUrl } = require('./config');
 const uploadDirAccessor = require('./utils/UploadDirAccessor');
 const auth = require('./boot/auth');
 const error404Middleware = require("./middleware/api/404");
+const sessionMiddleware = require('./middleware/api/session');
 // const bootSocket = require('./boot/socket');
 
 const app = express();
 auth();
 
-app.use(expressSession({
-  secret: cookieSecret,
-  resave: false,
-  saveUninitialized: false,
-}))
-
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 uploadDirAccessor.createUploadDirs();

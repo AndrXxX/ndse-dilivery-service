@@ -1,28 +1,7 @@
-const commentsStore = require("../store/CommentsStore");
 const sessionMiddleware = require('../middleware/api/session');
 const authMiddleware = require('../middleware/socket/auth');
 const passport = require("passport");
-
-const onLoadBookDiscussion = async (socket, bookId) => {
-  const comments = await commentsStore.getComments(5, { refTypeId: bookId});
-  comments && socket.emit('load-book-discussion', comments);
-}
-
-const onBookDiscussion = async (socket) => {
-  // const { user } = socket.handshake.query;
-  const { user } = socket.request;
-  // await onLoadBookDiscussion(socket, bookId);
-  //
-  // console.log(`Socket bookId: ${bookId}`);
-  // socket.join(bookId);
-  // socket.on('book-discussion', async (msg) => {
-  //   const comment = await commentsStore.create(msg);
-  //   if (comment) {
-  //     socket.to(bookId).emit('book-discussion', comment);
-  //     socket.emit('book-discussion', comment);
-  //   }
-  // });
-}
+const onGetHistoryHandler = require("./socket/OnGetHistoryHandler")
 
 const onDisconnect = (socket, id) => {
   socket.on('disconnect', () => {
@@ -40,7 +19,8 @@ module.exports = (io) => {
     const {id} = socket;
     console.log(`Socket connected: ${id}`);
 
-    // await onBookDiscussion(socket);
+    await onGetHistoryHandler(socket);
+
     onDisconnect(socket, id);
   });
 };

@@ -1,9 +1,9 @@
 const sessionMiddleware = require('../middleware/api/session');
 const authMiddleware = require('../middleware/socket/auth');
 const passport = require("passport");
-const onGetHistoryHandler = require("./socket/OnGetHistoryHandler")
-const onSendMessageHandler = require("./socket/OnSendMessageHandler")
-const subscribeOnNewMessageHandler = require("./socket/SubscribeOnNewMessageHandler")
+const onGetHistoryHandler = require("./handlers/OnGetHistoryHandler")
+const onSendMessageHandler = require("./handlers/OnSendMessageHandler")
+const subscribeOnNewMessageHandler = require("./handlers/SubscribeOnNewMessageHandler")
 
 const onDisconnect = (socket, id) => {
   socket.on('disconnect', () => {

@@ -6,8 +6,8 @@ const userRouter = require("./api/user");
 const advertisementsRouter = require("./api/advertisements");
 
 router.use(userRouter);
-router.use(authMiddleware);
 router.use('/advertisements', advertisementsRouter);
+router.use(authMiddleware);
 router.use(error404Middleware);
 
 module.exports = router;

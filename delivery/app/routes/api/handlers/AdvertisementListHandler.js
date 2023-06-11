@@ -4,7 +4,7 @@ const advertisementModule = require("../../../Modules/AdvertisementModule");
 
 module.exports = async (req, res) => {
   try {
-    const advertisements = await advertisementModule.list();
+    const advertisements = await advertisementModule.find({});
     return res
       .status(200)
       .json(formatter.ok(await Promise.all(advertisements.map(async (advertisement) => {

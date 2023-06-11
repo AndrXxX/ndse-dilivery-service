@@ -4,12 +4,19 @@ const formatter = require('../../../utils/ResponseFormatter');
 module.exports = async (req, res, next) => {
   let user = await usersStore.findByEmail(req.body.email);
   if (user) {
-    res
+    return res
       .status(401)
       .json(formatter.error("email занят"));
-    return;
   }
-  user = await usersStore.create(req.body);
+  try {
+    user = await usersStore.create(req.body);
+  } catch (e) {
+    const error = e.errors.name.message || "Ошибка при сохранении пользователя";
+    return res
+      .status(401)
+      .json(formatter.error(error));
+  }
+
   res
     .status(201)
     .json(formatter.ok({

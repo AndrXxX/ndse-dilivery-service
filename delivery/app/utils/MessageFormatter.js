@@ -1,5 +1,5 @@
 module.exports = {
-  async format(message) {
+  format(message) {
     return {
       author: typeof message.author === "object" ? {
         id: message.author.id,

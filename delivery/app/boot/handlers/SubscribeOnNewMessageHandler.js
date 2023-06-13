@@ -1,4 +1,5 @@
 const chatModule = require("../../Modules/ChatModule");
+const messageFormatter = require("../../utils/MessageFormatter");
 
 module.exports = async (socket) => {
   const currentUser = socket.request.user;
@@ -7,7 +8,7 @@ module.exports = async (socket) => {
     console.log("chat", chat);
     console.log("chat.messages.includes", chat.users.includes(currentUser.id));
     if (chat && chat.users.includes(currentUser.id)) {
-      socket.emit('newMessage', message);
+      socket.emit('newMessage', messageFormatter.format(message));
     }
   })
 };

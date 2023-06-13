@@ -11,7 +11,7 @@ module.exports = async (socket) => {
     }
     try {
       const chat = await chatModule.getOrCreate([currentUser.id, params.id]);
-      return socket.emit('chatHistory', chat.messages.map(message => messageFormatter.format(message)));
+      return socket.emit('chatHistory', await Promise.all(chat.messages.map(async (message) => await messageFormatter.format(message))));
     } catch (e) {
       console.error(e);
       return socket.emit('chatHistory', []);

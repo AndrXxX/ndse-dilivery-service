@@ -1,10 +1,17 @@
+const userModule = require("../Modules/UserModule");
+
+const getAuthor = async (message) => {
+  const author = (await userModule.findById(message.author)) || {};
+  return  {
+    id: author.id || message.author,
+    name: author.name || "",
+  };
+}
+
 module.exports = {
-  format(message) {
+  async format(message) {
     return {
-      author: typeof message.author === "object" ? {
-        id: message.author.id,
-        name: message.author.name,
-      } : { id: message.author },
+      author: await getAuthor(message),
       sentAt: message.sentAt,
       text: message.text,
     };

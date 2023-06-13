@@ -8,7 +8,7 @@ module.exports = async (socket) => {
     console.log("chat", chat);
     console.log("chat.messages.includes", chat.users.includes(currentUser.id));
     if (chat && chat.users.includes(currentUser.id)) {
-      socket.emit('newMessage', messageFormatter.format(message));
+      socket.emit('newMessage', await messageFormatter.format(message));
     }
   })
 };

@@ -6,7 +6,7 @@ services:
     ports:
       - ${MONGODB_PORT:-27017}:27017
     environment:
-      - MONGO_INITDB_DATABASE=${DB_NAME:-books_database}
+      - MONGO_INITDB_DATABASE=${DB_NAME:-library}
       - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME:-root}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD:-password}
     volumes:
@@ -28,7 +28,7 @@ services:
     image: andrew1gar/delivery_service
     environment:
       - PORT=80
-      - DB_URL=mongodb://${DB_USERNAME:-root}:${DB_PASSWORD:-password}@mongodb:${MONGODB_PORT:-27017}/
+      - DB_URL=mongodb://${DB_USERNAME:-root}:${DB_PASSWORD:-password}@mongodb:${MONGODB_PORT:-27017}/${DB_NAME:-library}
       - COOKIE_SECRET=${COOKIE_SECRET:-COOKIE_SECRET}
     ports:
       - ${DELIVERY_SERVICE_PORT:-3002}:80

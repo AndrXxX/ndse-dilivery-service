@@ -4,7 +4,7 @@ services:
     image: mongo
     restart: always
     ports:
-      - 27017:27017
+      - ${MONGODB_PORT:-27017}:27017
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-books_database}
       - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME:-root}
@@ -16,7 +16,7 @@ services:
     image: mongo-express
     restart: always
     ports:
-      - 8081:8081
+      - ${MONGO_EXPRESS_PORT:-27017}:8081
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USERNAME:-root}
@@ -25,12 +25,12 @@ services:
       - mongodb
 
   delivery:
-    image: andrew1gar/delivery
+    image: andrew1gar/delivery_service
     environment:
       - PORT=80
-      - DB_URL=mongodb://${DB_USERNAME:-root}:${DB_PASSWORD:-password}@mongodb:27017/
+      - DB_URL=mongodb://${DB_USERNAME:-root}:${DB_PASSWORD:-password}@mongodb:${MONGODB_PORT:-27017}/
       - COOKIE_SECRET=${COOKIE_SECRET:-COOKIE_SECRET}
     ports:
-      - 3002:80
+      - ${DELIVERY_SERVICE_PORT:-3002}:80
     depends_on:
       - mongodb
